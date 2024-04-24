@@ -18,7 +18,7 @@ export default function RootLayout({
       <body>
         <div className="relative bg-[#13131a] min-h-screen text-white px-16">
           <ThirdwebProvider
-            clientId={"ceb9b99ece7dddc1fc77a143678536f2"}
+            clientId={`${process.env.THIRDWEB_CLIENTID}`}
             activeChain={Sepolia}
           >
             <StateContextProvider>

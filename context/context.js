@@ -5,9 +5,7 @@ import { useContract, useAddress, useContractWrite } from "@thirdweb-dev/react";
 const StateContext = createContext();
 
 export const StateContextProvider = ({ children }) => {
-  const { contract } = useContract(
-    "0x2Fd524BC1B276619D35E58D01A89ba00E606F829"
-  );
+  const { contract } = useContract(`${process.env.CONTRACT_ADDRESS}`);
   const address = useAddress();
 
   // Mutate
