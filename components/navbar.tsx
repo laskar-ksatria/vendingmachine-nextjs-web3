@@ -30,12 +30,33 @@ export default function Navbar() {
           </Link>
         ) : null}
       </div>
-      <div>
+      <div className="flex items-center gap-5">
         <Link
           href="/"
-          className="text-xl cursor-pointer font-semibold uppercase text-white"
+          className="text-sm cursor-pointer hover:text-gray-500 uppercase font-semibold text-white"
         >
-          Web3 Vending Machine
+          Home
+        </Link>
+        {address === process.env.OWNER_ADDRESS ? (
+          <Link
+            href="/add-update-product"
+            className="text-sm cursor-pointer uppercase hover:text-gray-500 font-semibold text-white"
+          >
+            Add Product
+          </Link>
+        ) : (
+          <Link
+            href="/customer-bag"
+            className="text-sm cursor-pointer uppercase hover:text-gray-500 font-semibold text-white"
+          >
+            Customer Bag
+          </Link>
+        )}
+        <Link
+          href="/transactions"
+          className="text-sm uppercase cursor-pointer hover:text-gray-500 font-semibold text-white"
+        >
+          Transactions
         </Link>
       </div>
     </div>

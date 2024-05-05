@@ -6,6 +6,7 @@ import Navbar from "@/components/navbar";
 
 import { Sepolia } from "@thirdweb-dev/chains";
 import { ThirdwebProvider } from "@thirdweb-dev/react";
+import { ToastContainer } from "react-toastify";
 import { StateContextProvider } from "@/context/context";
 
 export default function RootLayout({
@@ -22,6 +23,7 @@ export default function RootLayout({
             activeChain={Sepolia}
           >
             <StateContextProvider>
+              <ToastContainer />
               <Navbar />
               {children}
             </StateContextProvider>
