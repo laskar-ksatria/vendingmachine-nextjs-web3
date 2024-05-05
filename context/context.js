@@ -1,6 +1,12 @@
 import { useContext, createContext } from "react";
 import { ethers } from "ethers";
-import { useContract, useAddress, useContractWrite } from "@thirdweb-dev/react";
+import {
+  useContract,
+  useAddress,
+  useContractWrite,
+  useReadContract,
+} from "@thirdweb-dev/react";
+import { resolveMethod, readContract } from "thirdweb";
 
 const StateContext = createContext();
 
@@ -10,7 +16,6 @@ export const StateContextProvider = ({ children }) => {
 
   // Mutate
   const { mutateAsync: addProduct } = useContractWrite(contract, "addProduct");
-  const { mutateAsync: buyProduct } = useContractWrite(contract, "buyProduct");
   const { mutateAsync: updatePrice } = useContractWrite(
     contract,
     "updatePrice"
@@ -19,26 +24,29 @@ export const StateContextProvider = ({ children }) => {
     contract,
     "updateStock"
   );
-  const { mutateAsync: widthdrawBalance } = useContractWrite(
-    contract,
-    "widthdrawBalance"
-  );
 
-  const ownerAddProduct = async () => {};
+  const ownerAddProduct = async (formData) => {};
 
-  const ownerUpdateStock = async () => {};
+  const ownerUpdateStock = async ({ pid, newStock, category }) => {};
 
-  const ownerUpdatePrice = async () => {};
+  const ownerUpdatePrice = async ({ pid, newPrice, category }) => {};
 
   const ownerWidthdraw = async () => {};
 
-  const customerBuyProduct = async () => {};
+  const customerBuyProduct = async ({ category, pid, price }) => {};
 
-  const getProducts = async () => {};
+  const getProducts = async (id) => {};
 
   const getCustomerBags = async () => {};
 
   const getTransactions = async () => {};
+
+  const getTotalBalance = async () => {
+    try {
+      const balance = await contract.call("ownerBalance");
+      console.log(balance);
+    } catch (error) {}
+  };
 
   return (
     <StateContext.Provider
@@ -53,6 +61,7 @@ export const StateContextProvider = ({ children }) => {
         getProducts,
         getCustomerBags,
         getTransactions,
+        getTotalBalance,
       }}
     >
       {children}

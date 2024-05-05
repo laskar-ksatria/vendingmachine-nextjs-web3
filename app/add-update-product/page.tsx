@@ -7,9 +7,11 @@ import CustomButton from "@/components/custom-button";
 import UpdateProductCard from "@/components/update-product-card";
 import { useStateContext } from "@/context/context";
 import { toast } from "react-toastify";
+import Image from "next/image";
 
 export default function AddProductPage() {
-  const { ownerAddProduct, getProducts, contract } = useStateContext();
+  const { ownerAddProduct, getProducts, contract, getTotalBalance } =
+    useStateContext();
   const [loadingPage, setLoadingPage] = useState(false);
   const [formData, setFormData] = useState({
     category: "0",
@@ -25,6 +27,8 @@ export default function AddProductPage() {
   const [state, setState] = useState({
     pageLoading: true,
     products: [],
+    ownerBalance: "Calling...",
+    widthdrawLoading: false,
   });
 
   const handleFormFieldChange = async (
@@ -40,8 +44,11 @@ export default function AddProductPage() {
 
   const handleChangeCategory = async (id: string) => {};
 
+  const handleGetBalance = async () => {};
+
   useEffect(() => {
     if (contract) {
+      handleGetBalance();
       handleGetProduct();
     }
   }, [contract]);
@@ -49,6 +56,23 @@ export default function AddProductPage() {
   return (
     <section className="flex flex-col rounded-[10px] sm:p-5 py-2">
       {loadingPage ? <Loader /> : null}
+
+      <div className="w-full flex justify-center items-center mb-10">
+        <div>
+          <p className="text-center font-semibold text-base mb-3">
+            Owner Balance
+          </p>
+          <p className="text-center font-semibold text-3xl">
+            {state.ownerBalance} ETH
+          </p>
+          <div className="flex justify-center items-center mt-5">
+            <button className="bg-red-500 text-white uppercase hover:bg-red-700 px-3 py-2 font-semibold rounded-md">
+              {state.widthdrawLoading ? "Processing..." : "Widthdraw"}
+            </button>
+          </div>
+        </div>
+      </div>
+
       <form
         onSubmit={handleSubmitProduct}
         className="w-full bg-[#1c1c24] p-10 flex flex-col rounded-2xl gap-[30px]"
