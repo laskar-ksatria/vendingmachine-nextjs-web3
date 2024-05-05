@@ -3,13 +3,10 @@
 import BagCard from "@/components/bag-card";
 import { useStateContext } from "@/context/context";
 import { useEffect, useState } from "react";
-import { useContract, useAddress, useContractWrite } from "@thirdweb-dev/react";
-import { resolveMethod, readContract } from "thirdweb";
 import Loader from "@/components/loader";
 
 export default function CustomerBagPage() {
-  const { getCustomerBags, contract, getTransactions, address } =
-    useStateContext();
+  const { getCustomerBags, contract } = useStateContext();
 
   const [state, setState] = useState({
     products: [],
@@ -18,7 +15,6 @@ export default function CustomerBagPage() {
 
   const handleGetProducts = async () => {
     const products = await getCustomerBags();
-    console.log(products);
     setState((prev) => ({ ...prev, pageLoading: false, products }));
   };
 

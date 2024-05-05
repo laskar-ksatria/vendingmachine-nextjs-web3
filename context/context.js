@@ -32,7 +32,7 @@ export const StateContextProvider = ({ children }) => {
   const ownerAddProduct = async (formData) => {
     try {
       const args = [
-        formData.category,
+        1,
         formData.name,
         formData.description,
         ethers.utils.parseEther(formData.price.toString()),
@@ -45,7 +45,6 @@ export const StateContextProvider = ({ children }) => {
       if (data) return { data: true };
       return { data: true, errors: false };
     } catch (error) {
-      console.log(error);
       return { errors: error };
     }
   };
@@ -68,14 +67,21 @@ export const StateContextProvider = ({ children }) => {
         ethers.utils.parseEther(newPrice.toString()),
       ];
       const data = await updatePrice({ args });
-      console.log(data);
       return { data: data };
     } catch (error) {
       return { errors: error };
     }
   };
 
-  const ownerWidthdraw = async () => {};
+  const ownerWidthdraw = async (amount) => {
+    const args = [ethers.utils.parseEther(amount.toString())];
+    try {
+      const { data } = await widthdrawBalance({ args });
+      return { data };
+    } catch (error) {
+      return { errors: error };
+    }
+  };
 
   const customerBuyProduct = async ({ category, pid, price }) => {
     try {
@@ -86,10 +92,8 @@ export const StateContextProvider = ({ children }) => {
           value: ethers.utils.parseEther(price),
         }
       );
-      console.log(data);
       return { data };
     } catch (error) {
-      console.log(error);
       return { errors: error };
     }
   };
@@ -125,16 +129,22 @@ export const StateContextProvider = ({ children }) => {
   const getTransactions = async () => {
     try {
       const transactions = await contract.call("getTransactions");
-      console.log(transactions);
       const parseTransactions = transactions.map((transac, i) => ({
         address: transac.buyer,
         productName: transac.productName,
         price: ethers.utils.formatEther(transac.price.toString()),
       }));
-      console.log(parseTransactions);
       return { data: parseTransactions };
     } catch (error) {
-      console.log(error);
+      return { errors: error };
+    }
+  };
+
+  const getTotalBalance = async () => {
+    try {
+      const balance = await contract.call("ownerBalance");
+      return { data: ethers.utils.formatEther(balance.toString()) };
+    } catch (error) {
       return { errors: error };
     }
   };
@@ -152,6 +162,7 @@ export const StateContextProvider = ({ children }) => {
         getProducts,
         getCustomerBags,
         getTransactions,
+        getTotalBalance,
       }}
     >
       {children}

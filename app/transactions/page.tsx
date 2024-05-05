@@ -14,7 +14,6 @@ export default function TransactionsPage() {
 
   const handleGetTransactions = async () => {
     const { data } = await getTransactions();
-    console.log(data);
     setState((prev) => ({ ...prev, pageLoading: false, transactions: data }));
   };
 

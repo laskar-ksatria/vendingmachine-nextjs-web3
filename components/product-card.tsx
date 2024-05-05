@@ -24,7 +24,6 @@ export default function ProductCard({
   stock,
   image,
   category,
-  isBag,
 }: ProductCardType) {
   const { customerBuyProduct } = useStateContext();
 
