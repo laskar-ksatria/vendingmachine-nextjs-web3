@@ -65,16 +65,21 @@ export default function AddProductPage() {
             Owner Balance
           </p>
           <p className="text-center font-semibold text-3xl">
-            {state.ownerBalance} ETH
+            {state.ownerBalance === "-"
+              ? "Calling..."
+              : `${state.ownerBalance} ETH`}{" "}
+            ETH
           </p>
-          <div className="flex justify-center items-center mt-5">
-            <button
-              onClick={() => handleWidthdrawBalance()}
-              className="bg-red-500 text-white uppercase hover:bg-red-700 px-3 py-2 font-semibold rounded-md"
-            >
-              {state.widthdrawLoading ? "Processing..." : "Widthdraw"}
-            </button>
-          </div>
+          {state.ownerBalance === "-" ? null : (
+            <div className="flex justify-center items-center mt-5">
+              <button
+                onClick={() => handleWidthdrawBalance()}
+                className="bg-red-500 text-white uppercase hover:bg-red-700 px-3 py-2 font-semibold rounded-md"
+              >
+                {state.widthdrawLoading ? "Processing..." : "Widthdraw"}
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
