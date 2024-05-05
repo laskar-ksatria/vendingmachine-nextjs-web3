@@ -46,6 +46,8 @@ export default function AddProductPage() {
 
   const handleGetBalance = async () => {};
 
+  const handleWidthdrawBalance = async () => {};
+
   useEffect(() => {
     if (contract) {
       handleGetBalance();
@@ -66,7 +68,10 @@ export default function AddProductPage() {
             {state.ownerBalance} ETH
           </p>
           <div className="flex justify-center items-center mt-5">
-            <button className="bg-red-500 text-white uppercase hover:bg-red-700 px-3 py-2 font-semibold rounded-md">
+            <button
+              onClick={() => handleWidthdrawBalance()}
+              className="bg-red-500 text-white uppercase hover:bg-red-700 px-3 py-2 font-semibold rounded-md"
+            >
               {state.widthdrawLoading ? "Processing..." : "Widthdraw"}
             </button>
           </div>
