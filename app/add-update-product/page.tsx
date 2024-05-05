@@ -73,6 +73,7 @@ export default function AddProductPage() {
           {state.ownerBalance === "-" ? null : (
             <div className="flex justify-center items-center mt-5">
               <button
+                disabled={state.ownerBalance === "0.0" ? true : false}
                 onClick={() => handleWidthdrawBalance()}
                 className="bg-red-500 text-white uppercase hover:bg-red-700 px-3 py-2 font-semibold rounded-md"
               >
