@@ -1,12 +1,28 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import PureModal from "react-pure-modal";
+import { useStateContext } from "@/context/context";
+import { toast } from "react-toastify";
+type ProductCardType = {
+  pid: number;
+  name: string;
+  description: string;
+  price: string;
+  stock: number;
+  image: string;
+  category: string;
+};
 
-const sampleImage =
-  "https://www.thespruceeats.com/thmb/X_JGM04VusvkuGqTVan4QmBRqjI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/how-to-make-homemade-french-fries-2215971-hero-01-02f62a016f3e4aa4b41d0c27539885c3.jpg";
-
-export default function UpdateProductCard() {
+export default function UpdateProductCard({
+  pid,
+  name,
+  description,
+  price,
+  stock,
+  image,
+  category,
+}: ProductCardType) {
   const [priceValue, setPriceValue] = useState("0");
   const [stockValue, setStockValue] = useState("0");
   const [showStockModal, setShowStockModal] = useState(false);
@@ -15,6 +31,11 @@ export default function UpdateProductCard() {
   const handleUpdatePrice = async () => {};
 
   const handleUpdateStock = async () => {};
+
+  useEffect(() => {
+    setPriceValue(price);
+    setStockValue(`${stock}`);
+  }, [price, stock]);
 
   return (
     <div className="sm:w-[288px] w-full rounded-t-[20px] bg-[#23232d] cursor-pointer shadow-default mb-10">
@@ -90,7 +111,7 @@ export default function UpdateProductCard() {
       {/* UPDATE STOCK MODAL ********************************* */}
 
       <img
-        src={sampleImage}
+        src={image}
         alt={`foods`}
         className="w-full h-[230px] object-cover rounded-t-[20px]"
       />
@@ -107,13 +128,13 @@ export default function UpdateProductCard() {
         <div className="flex justify-between flex-wrap mt-3 gap-2">
           <div className="flex flex-col">
             <h4 className="font-epilogue flex items-center font-semibold text-[14px] text-[#b2b3bd] leading-[22px]">
-              Price 0.0015
+              Price {price}
               <span className="ml-1">
                 <Image src={"/img/eth.png"} width={12} height={12} alt="eth" />
               </span>
             </h4>
             <p className="mt-[3px] flex items-center font-epilogue font-normal text-[12px] leading-[18px] text-[#808191] sm:max-w-[120px] truncate">
-              Stock 20
+              Stock {stock}
             </p>
           </div>
         </div>
